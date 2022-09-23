@@ -27,13 +27,21 @@ public class CartDisc {
     @JsonBackReference
     private User user;
 
-    @OneToOne(mappedBy = "user",fetch = FetchType.EAGER,cascade = {CascadeType.ALL})
-    @JsonManagedReference
-    private Disc disc;
+//   @OneToOne
+//           (mappedBy = "user",fetch = FetchType.EAGER,cascade = {CascadeType.ALL})
+//    @JsonManagedReference
+    @Column
+    private int discId;
 
     public CartDisc(CartDiscDto cartDiscDto){
        if(cartDiscDto.getQuantity() > 0){
            this.quantity = cartDiscDto.getQuantity();
+       }
+       if(cartDiscDto.getDiscId() > 0){
+           this.discId = cartDiscDto.getDiscId();
+       }
+       else{
+           this.discId = 1;
        }
     }
 

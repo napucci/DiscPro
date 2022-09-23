@@ -12,11 +12,14 @@ public class CartDiscDto {
 
     private Long id;
     private int quantity;
-    private Disc disc;
+    private int discId;
 
     public CartDiscDto(CartDisc cartDisc){
         if(cartDisc.getQuantity() > 0){
             this.quantity = cartDisc.getQuantity();
+        }
+        if(cartDisc.getDiscId() > 0){
+            this.discId = cartDisc.getDiscId();
         }
     }
 

@@ -30,10 +30,9 @@ public class CartDiscServiceImpl implements CartDiscService {
 
     @Override
     @Transactional
-    public String addDiscToCart(CartDiscDto cartDiscDto, Long discId, Long userId) {
+    public String addDiscToCart(CartDiscDto cartDiscDto, Long userId) {
         Optional<User> userOptional = userRepository.findById(userId);
-        Optional<Disc> discOptional = discRepository.findById(discId);
-        if(userOptional.isPresent() && discOptional.isPresent()){
+        if(userOptional.isPresent()){
             CartDisc cartDisc = new CartDisc(cartDiscDto);
             userOptional.ifPresent(cartDisc::setUser);
             cartDiscRepository.saveAndFlush(cartDisc);

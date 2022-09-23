@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface CartDiscService {
     @Transactional
-    String addDiscToCart(CartDiscDto cartDiscDto, Long discId, Long userId);
+    String addDiscToCart(CartDiscDto cartDiscDto, Long userId);
 
     @Transactional
     String deleteDiscFromCart(Long cartDiscId);
