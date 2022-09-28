@@ -25,9 +25,9 @@ public class CartDiscController {
         cartDiscService.addDiscToCart(cartDiscDto,userId);
     }
 
-    @DeleteMapping("/{cartDiscId}")
-    public void deleteDisc (@PathVariable Long cartDiscId){
-        cartDiscService.deleteDiscFromCart(cartDiscId);
+    @DeleteMapping("/{userId}/{cartDiscId}")
+    public void deleteDisc (@PathVariable Long userId, @PathVariable Long cartDiscId){
+        cartDiscService.deleteDiscFromCart(userId, cartDiscId);
     }
 
 

@@ -10,7 +10,7 @@ public interface CartDiscService {
     String addDiscToCart(CartDiscDto cartDiscDto, Long userId);
 
     @Transactional
-    String deleteDiscFromCart(Long cartDiscId);
+    String deleteDiscFromCart(Long userId, Long cartDiscId);
 
     List<CartDiscDto> getCartData(Long userId);
 }

@@ -46,10 +46,11 @@ public class CartDiscServiceImpl implements CartDiscService {
 
     @Override
     @Transactional
-    public String deleteDiscFromCart(Long cartDiscId) {
+    public String deleteDiscFromCart(Long userId, Long cartDiscId) {
 
+        Optional<User> userOptional = userRepository.findById(userId);
         Optional<CartDisc> cartDiscOptional = cartDiscRepository.findById(cartDiscId);
-        if ( cartDiscOptional.isPresent()) {
+        if (userOptional.isPresent() && cartDiscOptional.isPresent()) {
             cartDiscOptional.ifPresent(cartDisc -> cartDiscRepository.delete(cartDisc));
             return "Disc removed from cart";
         }

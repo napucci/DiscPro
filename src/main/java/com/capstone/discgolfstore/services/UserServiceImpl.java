@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
         List<String> response = new ArrayList<>();
         User user = new User(userDto);
         userRepository.saveAndFlush(user);
-        response.add("Login success");
+        response.add("http://localhost:8080/Login.html");
         return response;
     }
 
@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
         Optional<User> userOptional = userRepository.findByUsername(userDto.getUsername());
         if(userOptional.isPresent()){
             if(passwordEncoder.matches(userDto.getPassword(), userOptional.get().getPassword())){
-                response.add("Login Success");
+                response.add("http://localhost:8080/Home.html");
                 response.add(String.valueOf(userOptional.get().getId()));
             }
             else{
