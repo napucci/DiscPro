@@ -2,3 +2,7 @@ img {
     width: 150px;
     height: 150px;
 }
+
+.header{
+    background-image: linear-gradient(to right, pink, lightblue);
+}

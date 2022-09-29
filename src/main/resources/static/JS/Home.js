@@ -18,35 +18,51 @@ async function getDiscs(){
 }
 
 
-async function addToCart(obj){
-    const response = await fetch(`http://localhost:8080/api/v1/cart/${userId}`, {
+// async function addToCart(obj){
+//
+//     const response = await fetch(`http://localhost:8080/api/v1/cart/${userId}`, {
+//         method: "POST",
+//         body: JSON.stringify(obj),
+//         headers: headers
+//     })
+//         .catch(err => console.error(err.message))
+//         if(response.status == 200){
+//             return getCart();
+//         }
+// }
+
+async function addToCartById(id){
+
+    const response = await fetch(`http://localhost:8080/api/v1/cart/from/${userId}`, {
         method: "POST",
-        body: JSON.stringify(obj),
+        body: JSON.stringify(id),
         headers: headers
     })
         .catch(err => console.error(err.message))
-        if(response.status == 200){
-            return getCart();
-        }
+    if(response.status == 200){
+       console.log('Added successfully')
+    }
 }
 
 const createDiscCard = (array) => {
     discContainer.innerHTML = '';
+    console.log(array[0])
     array.forEach(obj => {
         let discCard = document.createElement("div")
+        discCard.classList.add("col-md-6")
         discCard.innerHTML = `
-            <div>
-                <p>${obj.id}</p>
-                <p>${obj.brand}</p>
-                <p>${obj.mold}</p>
-                <p>${obj.type}</p>
-                <p>${obj.speed}</p>
-                <p>${obj.glide}</p>
-                <p>${obj.turn}</p>
-                <p>${obj.fade}</p>
-                <p>${obj.price}</p>
-                <img src="${obj.photo}" alt="disc photo" style="height: 150px; object-fit: scale-down;"/>
-                <button class="btn btn-primary" onclick="addToCart(this.obj)">Add to Cart</button>
+            <div class="row">
+                <div class="col-md-4 mt-4">
+                <p> ${obj.brand}, ${obj.mold}</p>
+                <p> ${obj.type} </p>
+                <p> ${obj.speed}, ${obj.glide}, ${obj.turn}, ${obj.fade}</p>
+                <p>$ ${obj.price}</p>
+                </div>
+                <div class="col-md-4 mt-4 mb-4">
+                    <img class="mb-2" src="${obj.photo}" alt="disc photo" style="height: 150px; object-fit: scale-down;"/>
+                    <button class="btn btn-primary" onclick="addToCartById(${obj.id})">Add to Cart</button> 
+                </div>
+                
             </div>
         `
         discContainer.append(discCard);

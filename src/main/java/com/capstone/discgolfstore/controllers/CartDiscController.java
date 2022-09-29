@@ -30,6 +30,11 @@ public class CartDiscController {
         cartDiscService.deleteDiscFromCart(userId, cartDiscId);
     }
 
+    @PostMapping("/from/{userId}")
+    public void addDiscById(@RequestBody Long discId,@PathVariable Long userId){
+        cartDiscService.addDiscToCartById(discId,userId);
+    }
+
 
 
 }

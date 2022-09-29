@@ -13,4 +13,7 @@ public interface CartDiscService {
     String deleteDiscFromCart(Long userId, Long cartDiscId);
 
     List<CartDiscDto> getCartData(Long userId);
+
+    @Transactional
+    String addDiscToCartById(Long discId, Long userId);
 }

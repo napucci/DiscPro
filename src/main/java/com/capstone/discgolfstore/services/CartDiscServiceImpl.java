@@ -67,5 +67,24 @@ public class CartDiscServiceImpl implements CartDiscService {
         return Collections.emptyList();
 
     }
+    @Override
+    @Transactional
+    public String addDiscToCartById(Long discId, Long userId) {
+        Optional<User> userOptional = userRepository.findById(userId);
+        Optional<Disc> discOptional = discRepository.findById(discId);
+        if(userOptional.isPresent() && discOptional.isPresent()){
+            CartDiscDto cartDiscDto = new CartDiscDto();
+            cartDiscDto.setDiscId(discId.intValue());
+            cartDiscDto.setQuantity(1);
+            CartDisc cartDisc = new CartDisc(cartDiscDto);
+            userOptional.ifPresent(cartDisc::setUser);
+            cartDiscRepository.saveAndFlush(cartDisc);
+
+
+            return "Disc added to cart";
+        }
+        return "Disc could not be added.";
+
+    }
 
 }
