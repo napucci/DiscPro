@@ -86,5 +86,34 @@ public class CartDiscServiceImpl implements CartDiscService {
         return "Disc could not be added.";
 
     }
+    @Override
+    public Disc findDiscByCartDiscId(Long discId) {
+        Optional<Disc> discOptional = discRepository.findById(discId);
+        Disc disc = null;
+        if (discOptional.isPresent()) {
+            DiscDto discDto = new DiscDto(discOptional.get());
+            disc = new Disc(discDto);
+        }
+        return disc;
+    }
+    @Override
+    public List<Disc> getAllDiscsInCart(Long userId) {
+        Optional<User> userOptional = userRepository.findById(userId);
+        List<Disc> discList = Collections.emptyList();
+        if (userOptional.isPresent()) {
+            Set<CartDisc> cartDiscSet = userOptional.get().getCartDiscSet();
+            cartDiscSet.forEach(cartDisc -> {
+                Long discId = Long.valueOf(cartDisc.getDiscId());
+                Optional<Disc> discOptional = discRepository.findById(discId);
+                if (discOptional.isPresent()) {
+                    DiscDto discDto = new DiscDto(discOptional.get());
+                    Disc disc = new Disc(discDto);
+                    discList.add(disc);
+                }
+            });
+
+        }
+        return discList;
+    }
 
 }

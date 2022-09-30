@@ -8,9 +8,21 @@ const headers = {
 }
 
 
-async function getCart(userId){
-    console.log(userId)
-    await fetch(`http://localhost:8080/api/v1/cart/${userId}`, {
+// async function getCart(userId){
+//     console.log(userId)
+//     await fetch(`http://localhost:8080/api/v1/cart/${userId}`, {
+//         method: "GET",
+//         headers: headers
+//     })
+//         .then(response => response.json())
+//         .then(data => createCartCard(data))
+//         .catch(err => console.error(err))
+//
+// }
+
+async function getAllCartItems(userId){
+
+    await fetch(`http://localhost:8080/api/v1/cart/using/${userId}`, {
         method: "GET",
         headers: headers
     })
@@ -35,14 +47,16 @@ const createCartCard = (array) => {
     cartSection.innerHTML = ''
     array.forEach(obj => {
         console.log(obj)
+
         cartSection.innerHTML = `
         <div>
-        <p>${obj.quantity} ${obj.name}</p>
+        
+        <p>${obj.quantity} ${obj.name} ${obj.type}</p>
             <button class="btn btn-danger" onclick="deleteCartItem(obj.id)">Delete</button>
         </div>
         `
     })
 }
 
-getCart(userId);
+getAllCartItems(userId);
 // document.addEventListener('DOMContentLoaded', getCart)

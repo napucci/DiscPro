@@ -15,10 +15,10 @@ public class CartDiscController {
     @Autowired
     private CartDiscService cartDiscService;
 
-    @GetMapping("/{userId}")
-    public List<CartDiscDto> getCart(@PathVariable Long userId){
-        return cartDiscService.getCartData(userId);
-    }
+//    @GetMapping("/{userId}")
+//    public List<CartDiscDto> getCart(@PathVariable Long userId){
+//        return cartDiscService.getCartData(userId);
+//    }
 
     @PostMapping("/{userId}")
     public void addDisc(@RequestBody CartDiscDto cartDiscDto,@PathVariable Long userId){
@@ -33,6 +33,14 @@ public class CartDiscController {
     @PostMapping("/from/{userId}")
     public void addDiscById(@RequestBody Long discId,@PathVariable Long userId){
         cartDiscService.addDiscToCartById(discId,userId);
+    }
+//    @GetMapping("/{discId}")
+//    public void findDiscByCartDiscId(@RequestBody Long discId){
+//        cartDiscService.findDiscByCartDiscId(discId);
+//    }
+    @GetMapping("/using/${userId}")
+    public void getDiscsInCart(@PathVariable Long userId){
+        cartDiscService.getAllDiscsInCart(userId);
     }
 
 
