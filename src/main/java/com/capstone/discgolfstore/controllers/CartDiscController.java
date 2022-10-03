@@ -38,11 +38,8 @@ public class CartDiscController {
 //    public void findDiscByCartDiscId(@RequestBody Long discId){
 //        cartDiscService.findDiscByCartDiscId(discId);
 //    }
-    @GetMapping("/using/${userId}")
+    @GetMapping("/using/{userId}")
     public void getDiscsInCart(@PathVariable Long userId){
         cartDiscService.getAllDiscsInCart(userId);
     }
-
-
-
 }

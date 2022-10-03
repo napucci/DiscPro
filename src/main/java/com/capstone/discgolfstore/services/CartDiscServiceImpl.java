@@ -12,10 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -86,34 +83,57 @@ public class CartDiscServiceImpl implements CartDiscService {
         return "Disc could not be added.";
 
     }
-    @Override
-    public Disc findDiscByCartDiscId(Long discId) {
-        Optional<Disc> discOptional = discRepository.findById(discId);
-        Disc disc = null;
-        if (discOptional.isPresent()) {
-            DiscDto discDto = new DiscDto(discOptional.get());
-            disc = new Disc(discDto);
-        }
-        return disc;
-    }
-    @Override
-    public List<Disc> getAllDiscsInCart(Long userId) {
+//    @Override
+//    public Disc findDiscByCartDiscId(Long discId) {
+//        Optional<Disc> discOptional = discRepository.findById(discId);
+//        Disc disc = null;
+//        if (discOptional.isPresent()) {
+//            DiscDto discDto = new DiscDto(discOptional.get());
+//            disc = new Disc(discDto);
+//        }
+//        return disc;
+//    }
+//    @Override
+//    public List<DiscDto> getAllDiscsInCart(Long userId) {
+//        Optional<User> userOptional = userRepository.findById(userId);
+////        List<DiscDto> discList = Collections.emptyList();
+//        if (userOptional.isPresent()) {
+//            Set<CartDisc> cartDiscSet = userOptional.get().getCartDiscSet();
+//            List<DiscDto> discList = cartDiscRepository;
+//            return discList.stream().map(disc -> new DiscDto(disc)).collect(Collectors.toList());
+//            cartDiscSet.forEach(cartDisc -> {
+//                Long discId = Long.valueOf(cartDisc.getDiscId());
+//                Optional<Disc> discOptional = discRepository.findById(discId);
+//                if (discOptional.isPresent()) {
+//                    DiscDto discDto = new DiscDto(discOptional.get());
+//                    discList.add(discDto);
+//                }
+//            });
+////
+//        }
+//        return discList;
+//    }
+
+//    @Override
+    public List<CartDiscDto> getAllDiscsInCart(Long userId) {
         Optional<User> userOptional = userRepository.findById(userId);
-        List<Disc> discList = Collections.emptyList();
+        List<DiscDto> discDtoList = Collections.emptyList();
         if (userOptional.isPresent()) {
-            Set<CartDisc> cartDiscSet = userOptional.get().getCartDiscSet();
-            cartDiscSet.forEach(cartDisc -> {
-                Long discId = Long.valueOf(cartDisc.getDiscId());
-                Optional<Disc> discOptional = discRepository.findById(discId);
-                if (discOptional.isPresent()) {
-                    DiscDto discDto = new DiscDto(discOptional.get());
-                    Disc disc = new Disc(discDto);
-                    discList.add(disc);
-                }
-            });
+            List<CartDisc> cartDiscList = cartDiscRepository.findAllByUserEquals(userOptional.get());
+            return cartDiscList.stream().map(cartDisc -> new CartDiscDto(cartDisc)).collect(Collectors.toList());
+//            Set<CartDisc> cartDiscSet = userOptional.get().getCartDiscSet();
+//            cartDiscSet.forEach(cartDisc -> {
+//                Long discId = Long.valueOf(cartDisc.getDiscId());
+//                Optional<Disc> discOptional = discRepository.findById(discId);
+//                if (discOptional.isPresent()) {
+//                    DiscDto discDto = new DiscDto(discOptional.get());
+//                    discDtoList.add(discDto);
+//                }
+//            });
 
         }
-        return discList;
+        return Collections.emptyList();
     }
+
 
 }

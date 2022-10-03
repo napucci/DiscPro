@@ -20,14 +20,16 @@ const headers = {
 //
 // }
 
-async function getAllCartItems(userId){
+async function getAllCartItems(){
 
     await fetch(`http://localhost:8080/api/v1/cart/using/${userId}`, {
         method: "GET",
         headers: headers
     })
+
+        // .then(response => console.log(response))
         .then(response => response.json())
-        .then(data => createCartCard(data))
+        // .then(data => createCartCard(data))
         .catch(err => console.error(err))
 
 }
@@ -58,5 +60,5 @@ const createCartCard = (array) => {
     })
 }
 
-getAllCartItems(userId);
+getAllCartItems();
 // document.addEventListener('DOMContentLoaded', getCart)

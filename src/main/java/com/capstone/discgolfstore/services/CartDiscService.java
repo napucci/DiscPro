@@ -1,6 +1,7 @@
 package com.capstone.discgolfstore.services;
 
 import com.capstone.discgolfstore.dtos.CartDiscDto;
+import com.capstone.discgolfstore.dtos.DiscDto;
 import com.capstone.discgolfstore.entities.CartDisc;
 import com.capstone.discgolfstore.entities.Disc;
 
@@ -19,7 +20,7 @@ public interface CartDiscService {
     @Transactional
     String addDiscToCartById(Long discId, Long userId);
 
-    List<Disc> getAllDiscsInCart(Long userId);
+    List<CartDiscDto> getAllDiscsInCart(Long userId);
 
-    Disc findDiscByCartDiscId(Long discId);
+//    Disc findDiscByCartDiscId(Long discId);
 }

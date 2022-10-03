@@ -51,14 +51,14 @@ const createDiscCard = (array) => {
         let discCard = document.createElement("div")
         discCard.classList.add("col-md-6")
         discCard.innerHTML = `
-            <div class="row">
-                <div class="col-md-4 mt-4">
+            <div class="row card" style="width: 60%;">
+                <div class="col-md-4 mt-4 card-body">
                 <p> ${obj.brand}, ${obj.mold}</p>
                 <p> ${obj.type} </p>
                 <p> ${obj.speed}, ${obj.glide}, ${obj.turn}, ${obj.fade}</p>
                 <p>$ ${obj.price}</p>
                 </div>
-                <div class="col-md-4 mt-4 mb-4">
+                <div class="col-md-4 mt-4 mb-4 card-header">
                     <img class="mb-2" src="${obj.photo}" alt="disc photo" style="height: 150px; object-fit: scale-down;"/>
                     <button class="btn btn-primary" onclick="addToCartById(${obj.id})">Add to Cart</button> 
                 </div>
