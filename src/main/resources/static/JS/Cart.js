@@ -7,19 +7,6 @@ const headers = {
     'Content-Type': 'application/json'
 }
 
-
-// async function getCart(userId){
-//     console.log(userId)
-//     await fetch(`http://localhost:8080/api/v1/cart/${userId}`, {
-//         method: "GET",
-//         headers: headers
-//     })
-//         .then(response => response.json())
-//         .then(data => createCartCard(data))
-//         .catch(err => console.error(err))
-//
-// }
-
 async function getAllItemsInCart() {
 
     await fetch(`http://localhost:8080/api/v1/cart/using/${userId}`, {
@@ -59,7 +46,7 @@ async function addToQuantity(cartDiscId){
         headers: headers
     })
         .catch(err => console.error(err))
-        return getAllCartDiscs();
+    getAllItemsInCart();
 }
 
 async function subtractFromQuantity(cartDiscId){
@@ -69,9 +56,32 @@ async function subtractFromQuantity(cartDiscId){
     }
         )
         .catch(err => console.error(err))
-    return getAllCartDiscs();
+    getAllItemsInCart();
 }
 
+
+// const createCartCard = (arr2, array) => {
+//
+//     cartSection.innerHTML = ''
+//
+//     let index = -1;
+//     array.forEach(discInfo => {
+//         index = arr2.findIndex(cartDisc => cartDisc.discId === discInfo.id)
+//         let cartDiscCard = document.createElement("div");
+//         cartDiscCard.classList.add("card")
+//         cartDiscCard.style.width = "250px";
+//         cartDiscCard.innerHTML = `
+//         <img src="${discInfo.photo}" class="card-header" style="height: 100px; object-fit: scale-down;"/>
+//           <p class="card-body">${discInfo.brand} ${discInfo.mold} ${discInfo.type} ${discInfo.price} ${arr2[index].quantity} </p>
+//         <button class="btn btn-danger cart-header" onclick="deleteCartItem(${arr2[index].id})">Delete</button>
+//         <button onclick="subtractFromQuantity(${arr2[index].id})">-</button>
+//         <button onclick="addToQuantity(${arr2[index].id})">+</button>
+//             `
+//
+//         cartSection.append(cartDiscCard)
+//
+//     })
+// }
 
 const createCartCard = (arr2, array) => {
 
