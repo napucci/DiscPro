@@ -26,35 +26,22 @@ async function getAllItemsInCart() {
         method: "GET",
         headers: headers
     })
-        // .then(res => console.log(res.json()))
+
         .then(res => res.json())
-        // .then(data => createCartCard(data))
+        .then(data => getAllCartDiscs(data))
         .catch(err => console.error(err));
-        // (response => response.json())
 }
 
-async function getAllCartDiscs(){
+async function getAllCartDiscs(array){
     await fetch(`http://localhost:8080/api/v1/cart/userdiscs/${userId}`, {
         method: "GET",
         headers: headers
     })
         // .then(res => console.log(res.json()))
         .then(res => res.json())
+        .then(data => createCartCard(data, array))
         .catch(err => console.error(err))
 }
-
-async function getCartData(){
-    const getDiscInfo = await getAllItemsInCart();
-    const getDiscQuantity = await getAllCartDiscs();
-    console.log(getDiscInfo, getDiscQuantity)
-    createCartCard(getDiscInfo, getDiscQuantity)
-
-}
-
-// async function getCartItems(){
-//     await getAllCartItems().json();
-// }
-
 
 async function deleteCartItem(cartDiscId){
     await fetch(`http://localhost:8080/api/v1/cart/${userId}/${cartDiscId}`, {
@@ -62,24 +49,31 @@ async function deleteCartItem(cartDiscId){
         headers: headers
     })
         .catch(err => console.error(err))
-    return getCart(userId);
+    getAllItemsInCart();
 }
 
-async function updateQuantity(cartDiscId, type){
-    let bodyObj = {
-        type: type
-    }
+async function addToQuantity(cartDiscId){
+
     await fetch(`http://localhost:8080/api/v1/cart/${cartDiscId}`, {
         method: "PUT",
-        body: JSON.stringify(bodyObj),
         headers: headers
     })
         .catch(err => console.error(err))
-        getAllCartDiscs();
+        return getAllCartDiscs();
+}
+
+async function subtractFromQuantity(cartDiscId){
+    await fetch(`http://localhost:8080/api/v1/cart/subtract/${cartDiscId}`, {
+            method: "PUT",
+            headers: headers
+    }
+        )
+        .catch(err => console.error(err))
+    return getAllCartDiscs();
 }
 
 
-const createCartCard = (array, arr2) => {
+const createCartCard = (arr2, array) => {
 
     cartSection.innerHTML = ''
     array.sort((a, b) => {
@@ -88,28 +82,22 @@ const createCartCard = (array, arr2) => {
     arr2.sort((a, b) => {
         return a.id - b.id;
     })
+    console.log(array, arr2)
     for(let i = 0; i < array.length; i++){
         let cartDiscCard = document.createElement("div");
         cartDiscCard.classList.add("card")
         cartDiscCard.style.width = "250px";
         cartDiscCard.innerHTML = `
-        <img src="${obj.photo}" class="card-header" style="height: 100px; object-fit: scale-down;"/>
+        <img src="${array[i].photo}" class="card-header" style="height: 100px; object-fit: scale-down;"/>
           <p class="card-body">${array[i].brand} ${array[i].mold} ${array[i].type} ${array[i].price} ${arr2[i].quantity} </p>
-        <button class="btn btn-danger cart-header" onclick="deleteCartItem(${array[i].id})">Delete</button>
-        <button onclick="updateQuantity(${array[i].id}, 'minus')">-</button>
-        <button onclick="updateQuantity(${array[i].id}, 'plus')">+</button>
+        <button class="btn btn-danger cart-header" onclick="deleteCartItem(${arr2[i].id})">Delete</button>
+        <button onclick="subtractFromQuantity(${arr2[i].id})">-</button>
+        <button onclick="addToQuantity(${arr2[i].id})">+</button>
             `
 
-
-    }
-    array.forEach(obj => {
-        console.log(obj)
-
-          
-
         cartSection.append(cartDiscCard)
-    })
+    }
 }
 
-getCartData();
+getAllItemsInCart();
 // document.addEventListener('DOMContentLoaded', getCart)

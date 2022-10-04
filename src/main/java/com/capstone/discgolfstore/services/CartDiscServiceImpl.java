@@ -70,9 +70,15 @@ public class CartDiscServiceImpl implements CartDiscService {
         Optional<User> userOptional = userRepository.findById(userId);
         Optional<Disc> discOptional = discRepository.findById(discId);
         List<CartDisc> cartDiscList = cartDiscRepository.findAllByUserEquals(userOptional.get());
-        boolean condition = cartDiscList.stream().anyMatch(cartDisc -> cartDisc.getId() == discId);
+        boolean condition = false;
+        if(cartDiscList.isEmpty()){
+            condition = true;
+        }
+        else{
+            condition = !cartDiscList.stream().anyMatch(cartDisc -> cartDisc.getDiscId() == discId.intValue());
 
-        if(userOptional.isPresent() && discOptional.isPresent() && !condition){
+        }
+        if(userOptional.isPresent() && discOptional.isPresent() && condition){
             CartDiscDto cartDiscDto = new CartDiscDto();
             cartDiscDto.setDiscId(discId.intValue());
             cartDiscDto.setQuantity(1);
@@ -88,15 +94,27 @@ public class CartDiscServiceImpl implements CartDiscService {
     }
     @Override
     @Transactional
-    public void updateQuantity(Long cartDiscId, String type){
+    public void addToQuantity(Long cartDiscId){
           Optional<CartDisc> cartDiscOptional = cartDiscRepository.findById(cartDiscId);
-          if(cartDiscOptional.isPresent() && type == "plus"){
-             cartDiscOptional.get().setQuantity(cartDiscOptional.get().getQuantity() + 1);
+
+                  cartDiscOptional.ifPresent(cartDisc -> {
+                      cartDisc.setQuantity(cartDisc.getQuantity() + 1);
+                      cartDiscRepository.saveAndFlush(cartDisc);
+                  });
           }
-          else if(cartDiscOptional.isPresent() && type == "minus" && cartDiscOptional.get().getQuantity() > 1){
-              cartDiscOptional.get().setQuantity(cartDiscOptional.get().getQuantity() - 1);
+          @Override
+          @Transactional
+          public void subtractFromQuantity(Long cartDiscId){
+              Optional<CartDisc> cartDiscOptional = cartDiscRepository.findById(cartDiscId);
+
+              cartDiscOptional.ifPresent(cartDisc -> {
+                  if(cartDisc.getQuantity() > 1) {
+                      cartDisc.setQuantity(cartDisc.getQuantity() - 1);
+                      cartDiscRepository.saveAndFlush(cartDisc);
+                  }
+              });
           }
-    }
+
 
 
 

@@ -34,6 +34,7 @@ public class CartDisc {
     private int discId;
 
     public CartDisc(CartDiscDto cartDiscDto){
+
        if(cartDiscDto.getQuantity() > 0){
            this.quantity = cartDiscDto.getQuantity();
        }
@@ -44,6 +45,8 @@ public class CartDisc {
            this.discId = 1;
        }
     }
+
+
 
 
 }

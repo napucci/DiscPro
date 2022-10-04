@@ -25,7 +25,10 @@ public interface CartDiscService {
     List<CartDiscDto> getAllCartDiscs(Long userId);
 
     @Transactional
-    void updateQuantity(Long cartDiscId, String type);
+    void addToQuantity(Long cartDiscId);
+
+    @Transactional
+    void subtractFromQuantity(Long cartDiscId);
 
 //    Disc findDiscByCartDiscId(Long discId);
 }

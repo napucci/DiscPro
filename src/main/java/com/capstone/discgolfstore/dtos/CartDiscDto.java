@@ -21,6 +21,9 @@ public class CartDiscDto {
         if(cartDisc.getDiscId() > 0){
             this.discId = cartDisc.getDiscId();
         }
+        if(cartDisc.getId() > 0){
+            this.id = cartDisc.getId();
+        }
     }
 
 

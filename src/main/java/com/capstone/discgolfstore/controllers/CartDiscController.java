@@ -49,7 +49,12 @@ public class CartDiscController {
     }
 
     @PutMapping("/{cartDiscId}")
-    public void changeQuantity(@PathVariable Long cartDiscId, @RequestBody String type){
-        cartDiscService.updateQuantity(cartDiscId, type);
+    public void moreQuantity(@PathVariable Long cartDiscId){
+        cartDiscService.addToQuantity(cartDiscId);
+    }
+
+    @PutMapping("/subtract/{cartDiscId}")
+    public void lessQuantity(@PathVariable Long cartDiscId){
+        cartDiscService.subtractFromQuantity(cartDiscId);
     }
 }
