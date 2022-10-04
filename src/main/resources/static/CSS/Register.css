@@ -1,0 +1,22 @@
+img {
+    height: 100%;
+    width: 100%;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    object-fit: cover;
+    transform: scale(1.1);
+}
+
+#login-container{
+    max-resolution: auto;
+    width: 70vw;
+    margin: auto;
+    transform: translateY(75px);
+    border-radius: 20px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    overflow: hidden;
+}
+
+#right-container {
+    position: relative;
+}

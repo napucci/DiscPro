@@ -69,7 +69,10 @@ public class CartDiscServiceImpl implements CartDiscService {
     public String addDiscToCartById(Long discId, Long userId) {
         Optional<User> userOptional = userRepository.findById(userId);
         Optional<Disc> discOptional = discRepository.findById(discId);
-        if(userOptional.isPresent() && discOptional.isPresent()){
+        List<CartDisc> cartDiscList = cartDiscRepository.findAllByUserEquals(userOptional.get());
+        boolean condition = cartDiscList.stream().anyMatch(cartDisc -> cartDisc.getId() == discId);
+
+        if(userOptional.isPresent() && discOptional.isPresent() && !condition){
             CartDiscDto cartDiscDto = new CartDiscDto();
             cartDiscDto.setDiscId(discId.intValue());
             cartDiscDto.setQuantity(1);
@@ -83,6 +86,20 @@ public class CartDiscServiceImpl implements CartDiscService {
         return "Disc could not be added.";
 
     }
+    @Override
+    @Transactional
+    public void updateQuantity(Long cartDiscId, String type){
+          Optional<CartDisc> cartDiscOptional = cartDiscRepository.findById(cartDiscId);
+          if(cartDiscOptional.isPresent() && type == "plus"){
+             cartDiscOptional.get().setQuantity(cartDiscOptional.get().getQuantity() + 1);
+          }
+          else if(cartDiscOptional.isPresent() && type == "minus" && cartDiscOptional.get().getQuantity() > 1){
+              cartDiscOptional.get().setQuantity(cartDiscOptional.get().getQuantity() - 1);
+          }
+    }
+
+
+
 //    @Override
 //    public Disc findDiscByCartDiscId(Long discId) {
 //        Optional<Disc> discOptional = discRepository.findById(discId);
@@ -115,24 +132,45 @@ public class CartDiscServiceImpl implements CartDiscService {
 //    }
 
 //    @Override
-    public List<CartDiscDto> getAllDiscsInCart(Long userId) {
+    public List<DiscDto> getAllDiscsInCart(Long userId) {
         Optional<User> userOptional = userRepository.findById(userId);
-        List<DiscDto> discDtoList = Collections.emptyList();
+        List<DiscDto> discDtoList = new ArrayList<DiscDto>();
         if (userOptional.isPresent()) {
             List<CartDisc> cartDiscList = cartDiscRepository.findAllByUserEquals(userOptional.get());
-            return cartDiscList.stream().map(cartDisc -> new CartDiscDto(cartDisc)).collect(Collectors.toList());
+//            return cartDiscList.stream().map(cartDisc -> new CartDiscDto(cartDisc)).collect(Collectors.toList());
 //            Set<CartDisc> cartDiscSet = userOptional.get().getCartDiscSet();
-//            cartDiscSet.forEach(cartDisc -> {
-//                Long discId = Long.valueOf(cartDisc.getDiscId());
-//                Optional<Disc> discOptional = discRepository.findById(discId);
-//                if (discOptional.isPresent()) {
-//                    DiscDto discDto = new DiscDto(discOptional.get());
-//                    discDtoList.add(discDto);
-//                }
-//            });
+            cartDiscList.forEach(cartDisc -> {
+                Long discId = Long.valueOf(cartDisc.getDiscId());
+                Optional<Disc> discOptional = discRepository.findById(discId);
+                if (discOptional.isPresent()) {
+                    DiscDto discDto = new DiscDto(discOptional.get());
+                    discDtoList.add(discDto);
+                }
+            });
 
         }
-        return Collections.emptyList();
+//        CartDiscDto cartDiscDto = new CartDiscDto();
+//        cartDiscDto.setQuantity(5);
+//        cartDiscDto.setDiscId(1);
+////        userOptional.ifPresent(cartDisc::setUser);
+//        CartDisc cartDisc = new CartDisc(cartDiscDto);
+//       List<CartDiscDto> cartDiscDtoList = new ArrayList<CartDiscDto>();
+//       cartDiscDtoList.add(cartDiscDto);
+        return discDtoList;
+    }
+
+    public List<CartDiscDto> getAllCartDiscs(Long userId) {
+        Optional<User> userOptional = userRepository.findById(userId);
+        List<CartDiscDto> cartDiscDtoList = new ArrayList<>();
+        if (userOptional.isPresent()) {
+            List<CartDisc> cartDiscList = cartDiscRepository.findAllByUserEquals(userOptional.get());
+            cartDiscList.forEach(cartDisc -> {
+                CartDiscDto cartDiscDto = new CartDiscDto(cartDisc);
+                cartDiscDtoList.add(cartDiscDto);
+            });
+
+        }
+        return cartDiscDtoList;
     }
 
 

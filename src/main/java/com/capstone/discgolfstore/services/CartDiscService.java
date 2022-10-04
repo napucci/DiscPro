@@ -20,7 +20,12 @@ public interface CartDiscService {
     @Transactional
     String addDiscToCartById(Long discId, Long userId);
 
-    List<CartDiscDto> getAllDiscsInCart(Long userId);
+    List<DiscDto> getAllDiscsInCart(Long userId);
+
+    List<CartDiscDto> getAllCartDiscs(Long userId);
+
+    @Transactional
+    void updateQuantity(Long cartDiscId, String type);
 
 //    Disc findDiscByCartDiscId(Long discId);
 }

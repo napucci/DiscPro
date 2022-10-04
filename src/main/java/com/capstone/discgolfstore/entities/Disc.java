@@ -63,6 +63,21 @@ public class Disc {
         if (discDto.getPhoto() != null) {
             this.photo = discDto.getPhoto();
         }
+        if(discDto.getFade() > -5){
+            this.fade = discDto.getFade();
+        }
+        if(discDto.getGlide() > -5) {
+            this.glide = discDto.getGlide();
+        }
+        if(discDto.getTurn() > -5) {
+            this.turn = discDto.getTurn();
+        }
+        if(discDto.getSpeed() > -5) {
+            this.speed = discDto.getSpeed();
+        }
+        if(discDto.getPrice() > 0.00) {
+            this.price = discDto.getPrice();
+        }
     }
 
     }

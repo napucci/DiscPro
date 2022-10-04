@@ -40,6 +40,21 @@ public class DiscDto implements Serializable {
         if(disc.getPhoto() != null){
             this.photo = disc.getPhoto();
         }
+        if(disc.getFade() > -5){
+            this.fade = disc.getFade();
+        }
+        if(disc.getGlide() > -5) {
+            this.glide = disc.getGlide();
+        }
+        if(disc.getTurn() > -5) {
+            this.turn = disc.getTurn();
+        }
+        if(disc.getSpeed() > -5) {
+            this.speed = disc.getSpeed();
+        }
+        if(disc.getPrice() > 0.00) {
+            this.price = disc.getPrice();
+        }
 
     }
 

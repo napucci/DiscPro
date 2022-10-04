@@ -39,7 +39,17 @@ public class CartDiscController {
 //        cartDiscService.findDiscByCartDiscId(discId);
 //    }
     @GetMapping("/using/{userId}")
-    public void getDiscsInCart(@PathVariable Long userId){
-        cartDiscService.getAllDiscsInCart(userId);
+    public List<DiscDto> getDiscsInCart(@PathVariable Long userId){
+        return cartDiscService.getAllDiscsInCart(userId);
+    }
+
+    @GetMapping("/userdiscs/{userId}")
+    public List<CartDiscDto> getAllUserDiscs(@PathVariable Long userId){
+        return cartDiscService.getAllCartDiscs(userId);
+    }
+
+    @PutMapping("/{cartDiscId}")
+    public void changeQuantity(@PathVariable Long cartDiscId, @RequestBody String type){
+        cartDiscService.updateQuantity(cartDiscId, type);
     }
 }
