@@ -49,18 +49,20 @@ const createDiscCard = (array) => {
     console.log(array[0])
     array.forEach(obj => {
         let discCard = document.createElement("div")
-        discCard.classList.add("col-md-6")
-        discCard.innerHTML = `  
-            <div class="row card" style="width: 60%;">
-                <div class="col-md-4 mt-4 mb-4 card-header">
-                    <img class="mb-2" src="${obj.photo}" alt="disc photo" style="height: 150px; object-fit: scale-down;"/>
-                   
+        discCard.innerHTML = ` 
+            <div class="card mt-3" style="max-width: 540px;">
+              <div class="row no-gutters">
+                <div class="col-md-4">
+                    <img src="${obj.photo}" class="card-img" alt="disc photo" style="height: 150px; object-fit: scale-down;">
                 </div>
-                <div class="col-md-4 mt-4 card-body">
-                    <p> ${obj.brand}, ${obj.mold}</p>
-                    <p> ${obj.type} </p>
-                    <p> ${obj.speed}, ${obj.glide}, ${obj.turn}, ${obj.fade}</p>
-                    <p>$ ${obj.price}  <button class="btn btn-primary" onclick="addToCartById(${obj.id})">Add to Cart</button> </p>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">${obj.brand}, ${obj.mold} </h5>
+                        <p class="card-text">${obj.type}: ${obj.speed}, ${obj.glide}, ${obj.turn}, ${obj.fade}</p>
+                        <p class="card-text"><small class="text-muted">$${obj.price} </small></p>
+                        <button class="btn btn-primary" onclick="addToCartById(${obj.id})">Add to Cart</button>
+                    </div>
+                </div>
                 </div>
             </div>
         `

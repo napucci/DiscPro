@@ -3,6 +3,11 @@
 /*    background-size: cover; */
 /*}*/
 
+body{
+    background-image: url("https://lionsprideonline.com/wp-content/uploads/2016/12/disc-golf-picture.jpg");
+    z-index: 100;
+}
+
 img {
     height: 100%;
     width: 100%;
@@ -20,6 +25,7 @@ img {
     border-radius: 20px;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     overflow: hidden;
+    color: white;
 }
 
 #right-container {

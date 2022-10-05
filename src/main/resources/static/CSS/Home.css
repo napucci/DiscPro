@@ -3,6 +3,11 @@ img {
     height: 150px;
 }
 
-.header{
-    background-image: linear-gradient(to right, #c6ffdd, #fbd786, #f7797d);
+#logo{
+    height: 125px;
+    width: 150px;
+}
+
+.navbar{
+
 }
