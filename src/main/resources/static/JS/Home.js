@@ -50,7 +50,7 @@ const createDiscCard = (array) => {
     array.forEach(obj => {
         let discCard = document.createElement("div")
         discCard.innerHTML = ` 
-            <div class="card mt-3" style="max-width: 540px;">
+            <div class="card mt-2" style="max-width: 540px;">
               <div class="row no-gutters">
                 <div class="col-md-4">
                     <img src="${obj.photo}" class="card-img" alt="disc photo" style="height: 150px; object-fit: scale-down;">
